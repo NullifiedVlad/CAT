@@ -171,10 +171,13 @@ async def reboot(ctx):  # перезагрузка
 
 @bot.command()
 async def voice(ctx, lang, *, text):  # проиграть аудио сообщение
+    # проговаривание текста
     tts = gTTS(str(text), lang=lang)
-
+    # сохранение файла
     tts.save('say.mp3')
+    # проигрывание
     playsound('say.mp3')
+    # удаление файла в целях созранения памяти
     os.remove('say.mp3')
 
     await ctx.send('Сообщение успешно проигранно!')
