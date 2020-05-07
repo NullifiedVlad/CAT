@@ -1,11 +1,11 @@
 token = ' '  # Вставьте токен
-channel = 687944069271519257
+channel = 687944069271519257  # вставь сюда свой айди канала
 
 
 keys = ['\t', '\n', '\r', ' ', '!', '"', '#', '$', '%', '&', "'", '(',
 ')', '*', '+', ',', '-', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7',
 '8', '9', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_', '`',
-'a', 'b', 'c', 'd', 'e','f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
+'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '|', '}', '~',
 'accept', 'add', 'alt', 'altleft', 'altright', 'apps', 'backspace',
 'browserback', 'browserfavorites', 'browserforward', 'browserhome',
@@ -23,7 +23,7 @@ keys = ['\t', '\n', '\r', ' ', '!', '"', '#', '$', '%', '&', "'", '(',
 'prtsc', 'prtscr', 'return', 'right', 'scrolllock', 'select', 'separator',
 'shift', 'shiftleft', 'shiftright', 'sleep', 'space', 'stop', 'subtract', 'tab',
 'up', 'volumedown', 'volumemute', 'volumeup', 'win', 'winleft', 'winright', 'yen',
-'command', 'option', 'optionleft', 'optionright','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','Q','R',
+'command', 'option', 'optionleft', 'optionright', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N','O','Q','R',
 'S','T','U','V','W','X','Y','Z']
 
 disable_internet = '''
