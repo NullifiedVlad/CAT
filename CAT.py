@@ -90,15 +90,12 @@ async def command(ctx, *, todo):
 
 @bot.command()
 async def kill(ctx, *, process):
-    try:
-        output = os.system(f'taskkill /im {str(process)} /f')
-        if output == 0:
-            await ctx.send('**CAT**: Процесс успешно убит!')
-        else:
-            await ctx.send('**CAT**: Такого процесса нет или вы указали непраильный процесс!')
-            del command
-    except UnboundLocalError:
-        await ctx.send('**CAT**: Эта команда доступна только для Windows!')
+    output = os.system(f'taskkill /im {str(process)} /f')
+    if output == 0:
+        await ctx.send('**CAT**: Процесс успешно убит!')
+    else:
+        await ctx.send('**CAT**: Такого процесса нет или вы указали непраильный процесс!')
+        del command
 
 
 @bot.command()
