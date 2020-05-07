@@ -9,7 +9,8 @@ import sys
 import subprocess
 import config
 from datetime import datetime
-
+from gtts import gTTS
+from playsound import playsound
 
 pg.FAILSAFE = False  # делает невозможным прервать движение мышки
 bot = commands.Bot(command_prefix='/')  # префикс для комманд
@@ -166,6 +167,17 @@ async def shutdown(ctx):  # выключение пк
 async def reboot(ctx):  # перезагрузка
     await ctx.send('Перезагружаю компьютер...')
     os.system('shutdown -r -t 0 >null')
+
+
+@bot.command()
+async def voice(ctx, lang, *, text):  # проиграть аудио сообщение
+    tts = gTTS(str(text), lang=lang)
+
+    tts.save('say.mp3')
+    playsound('say.mp3')
+    os.remove('say.mp3')
+
+    await ctx.send('Сообщение успешно проигранно!')
 
 
 bot.run(config.token)
