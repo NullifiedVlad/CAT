@@ -77,7 +77,7 @@ async def press(ctx, key, how_many):  # нажать клавишу
 
 @bot.command()
 async def help(ctx):  # сообщение помощи
-    await ctx.send(config.helpmessage, file=discord.File('Banners/Banner.png'))
+    await ctx.send(config.helpmessage)
 
 
 @bot.command()
