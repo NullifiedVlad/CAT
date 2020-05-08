@@ -21,23 +21,36 @@ print('''
                                                                              ░███                                    
                                                                              █████                                   
                                                                             ░░░░░ ''')
-print(f'''{Fore.GREEN}Токен бота: {config.token}
-{Fore.GREEN}Айди канала: {config.channel}''')
-answer = input(Fore.GREEN+'Если у вас Windows введите 1 если линукс 0: ')
+print(f'''{Fore.WHITE}Токен бота: {Fore.RED} {config.token}
+{Fore.WHITE}Айди канала: {Fore.RED}{config.channel}''')
 
-if int(answer) == 1:
-    file = 'CAT.exe'
-else:
-    file = 'CAT'
+answer = True
+
+while answer:
+    answer = input(Fore.GREEN+'Если у вас Windows введите 1 если линукс введите 0: ')
+    if int(answer) == 1:
+        file = 'CAT.exe'
+        answer = False
+
+    elif int(answer) == 0:
+        file = 'CAT'
+        answer = False
+    else:
+        pass
 
 
 if config.token == '':
+
     print(Fore.RED + 'Вы не вставили свой токен!')
     sys.exit()
+
 elif config.channel == 228:
+
     print(Fore.RED + 'Вы не вставили айди канала куда должно отпровляться сообщение!')
     sys.exit()
+
 else:
+
     os.system('pyinstaller -w -F CAT.py')
     os.remove('CAT.spec')
     shutil.rmtree('build')
