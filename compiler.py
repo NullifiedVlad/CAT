@@ -21,8 +21,8 @@ print('''
                                                                              ░███                                    
                                                                              █████                                   
                                                                             ░░░░░ ''')
-print(f'''{Fore.WHITE}Токен бота: {Fore.RED} {config.token}
-{Fore.WHITE}Айди канала: {Fore.RED}{config.channel}''')
+print(f'''{Fore.WHITE}Токен бота: {Fore.BLUE} {config.token}
+{Fore.WHITE}Айди канала: {Fore.BLUE}{config.channel}''')
 
 answer = True
 
