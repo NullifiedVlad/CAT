@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 import requests
 
 
-def ip():  # получение ip 
+def ip():  # получение ip
     heads = {'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:75.0) Gecko/20100101 Firefox/75.0'}
     r = requests.get('https://2ip.ru/', headers=heads)
     soup = BeautifulSoup(r.text, 'html.parser')
