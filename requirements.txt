@@ -1,0 +1,7 @@
+PyAutoGUI
+DateTime
+gTTS
+playsound
+colorama
+requests
+beautifulsoup4

