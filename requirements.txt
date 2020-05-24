@@ -5,3 +5,5 @@ playsound
 colorama
 requests
 beautifulsoup4
+discord.py
+subprocess32
