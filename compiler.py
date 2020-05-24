@@ -50,18 +50,16 @@ elif config.channel == 228:
     sys.exit()
 
 else:
-
     os.system('pyinstaller -w -F CAT.py')
     os.remove('CAT.spec')
     shutil.rmtree('build')
     try:
-        f = open(f'dist/{file}', 'rb')
-        data = f.read()
-        f.close()
 
-        f = open(file, 'wb')
-        f.write(data)
-        f.close()
+        with open(f'dist/{file}', 'rb') as f:
+            data = f.read()
+
+        with open(file, 'wb')as f:
+            f.write(data)
 
         shutil.rmtree('dist')
         print(Fore.GREEN+'Компиляция успешно завершена!')

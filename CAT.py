@@ -1,7 +1,7 @@
 """
 Join to our telegram channel https://t.me/CAT_discord_dev
 Jo to our telegram group https://t.me/catchatdev
-Made by NullifiedVlad 2020
+Made by NullifiedVlad (C) 2020
 """
 
 # Импорт библиотек
@@ -35,7 +35,7 @@ async def on_ready():
 Разрешение экрана: **{x}x{y}** 
 IP: **{nf.ip()}** 
 Напишите **/help** для справки!''')
-    await bot.change_presence(activity=discord.Game(f'Был звпущен в {date.hour}:{date.minute}'))
+    await bot.change_presence(activity=discord.Game(f'Был запущен в {date.hour}:{date.minute}'))
 
 
 @bot.command()
