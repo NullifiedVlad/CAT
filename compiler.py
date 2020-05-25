@@ -21,13 +21,12 @@ print('''
                                                                              ░███                                    
                                                                              █████                                   
                                                                             ░░░░░ ''')
+
 print(f'''{Fore.WHITE}Токен бота: {Fore.BLUE} {config.token}
 {Fore.WHITE}Айди канала: {Fore.BLUE}{config.channel}''')
-
 isAnswer = True
-
 while isAnswer:
-    answer = input(Fore.GREEN+'Если у вас Windows введите 1, если линукс введите 0: ')
+    answer = input(Fore.GREEN + 'Если у вас Windows введите 1, если линукс введите 0: ')
     if int(answer) == 1:
         file = 'CAT.exe'
         isAnswer = False
@@ -37,7 +36,6 @@ while isAnswer:
         isAnswer = False
     else:
         pass
-
 
 if config.token == '':
 
@@ -50,6 +48,18 @@ elif config.channel == 228:
     sys.exit()
 
 else:
+    libs = ['PyAutoGUI',
+            'DateTime',
+            'gTTS',
+            'playsound',
+            'colorama',
+            'requests',
+            'beautifulsoup4',
+            'discord.py',
+            'subprocess32']
+
+    for lib in libs:
+        os.system(f'pip3 install {lib}')
     os.system('pyinstaller -w -F CAT.py')
     os.remove('CAT.spec')
     shutil.rmtree('build')
@@ -62,7 +72,7 @@ else:
             f.write(data)
 
         shutil.rmtree('dist')
-        print(Fore.GREEN+'Компиляция успешно завершена!')
+        print(Fore.GREEN + 'Компиляция успешно завершена!')
     except FileNotFoundError:
         print(f'''{Fore.RED} Ошибка я не смог найти {file} , наверное вы изменили название файла CAT.py 
 на другой или же вы выбрали не тот мод для компиляции!''')

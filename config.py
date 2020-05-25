@@ -4,8 +4,8 @@ Jo to our telegram group https://t.me/catchatdev
 Made by NullifiedVlad 2020
 """
 
-token = ''  # Вставьте токен
-channel = 228  # вставь сюда свой айди канала
+token = '1'  # Вставьте токен
+channel = 2228  # вставь сюда свой айди канала
 
 
 keys = ['\\t', '\\n', '\\r', ' ', '!', '"', '#', '$', '%', '&', "'", '(',
