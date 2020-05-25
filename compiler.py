@@ -56,7 +56,9 @@ else:
             'requests',
             'beautifulsoup4',
             'discord.py',
-            'subprocess32']
+            'subprocess32',
+            'wheel',
+            'pyinstaller']
 
     for lib in libs:
         os.system(f'pip3 install {lib}')
