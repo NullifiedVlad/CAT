@@ -58,7 +58,8 @@ else:
             'beautifulsoup4',
             'discord.py',
             'subprocess32',
-            'pyinstaller']
+            'pyinstaller',
+            'ctypes']
 
     for lib in libs:
         os.system(f'pip3 install {lib}')
