@@ -220,5 +220,5 @@ async def wallpaper(ctx, url):
     else:
         await ctx.send('**CAT:** Ошибка!')
 
-    os.remove('wallpaper.jpg')
+    os.remove('wallpaper.png')
 bot.run(config.token)
