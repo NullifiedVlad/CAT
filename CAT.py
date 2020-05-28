@@ -104,7 +104,6 @@ async def help(ctx):  # send help message
     embed.add_field(name='**/copy**', value='Отправляет файл к вам на сервер.', inline=False)
     embed.add_field(name='**/shutdown**', value='Выключить ПК.', inline=False)
     embed.add_field(name='**/reboot**', value='Перезагрузка ПК.', inline=False)
-    embed.add_field(name='**/voice**', value='(lang) (text) Проиграть голосовое сообщение.', inline=False)
     embed.add_field(name='**/off**', value='Выключить бота.', inline=False)
     embed.set_thumbnail(url='https://i.imgur.com/YbYKL0F.png')
     embed.set_footer(text=f'Made by NullifiedVlad',
@@ -186,21 +185,6 @@ async def shutdown(ctx):  # выключение пк
 async def reboot(ctx):  # перезагрузка
     await ctx.send('Перезагружаю компьютер...')
     os.system('shutdown -r -t 0 >null')
-
-
-@bot.command()
-async def voice(ctx, lang, *, text):  # проиграть аудио сообщение
-    # проговаривание текста
-    tts = gTTS(str(text), lang=lang)
-    # сохранение файла
-    tts.save('say.mp3')
-    # проигрывание
-    playsound('say.mp3')
-    # удаление файла в целях сохранения памяти
-    os.remove('say.mp3')
-
-    await ctx.send('Сообщение успешно проигранно!')
-    del text
 
 
 @bot.command()
