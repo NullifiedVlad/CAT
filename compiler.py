@@ -60,8 +60,7 @@ else:
             'subprocess32',
             'pyinstaller',
             'ctypes',
-            'pypiwin32',
-            'pywin32']
+            'pypiwin32']
 
     for lib in libs:
         os.system(f'pip3 install {lib}')

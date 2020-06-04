@@ -18,6 +18,7 @@ from discord.ext import commands
 import config
 import nullfunction as nf
 
+
 pg.FAILSAFE = False  # делает невозможным прервать движение мышки
 bot = commands.Bot(command_prefix='/')  # префикс для комманд
 channel = bot.get_channel(config.channel)  # введите id канала в который должен писать бот
