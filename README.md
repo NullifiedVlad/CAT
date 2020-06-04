@@ -8,4 +8,4 @@
 # Компиляция
 1)Замените содержимое token и channel на свои
 
-2) запустите compile.py ```python3 compile.py```
+2) запустите compile.py ```python3 compiler.py```
