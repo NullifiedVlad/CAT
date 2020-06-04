@@ -7,3 +7,5 @@ requests
 beautifulsoup4
 discord.py
 subprocess32
+pypiwin32
+pywin32

