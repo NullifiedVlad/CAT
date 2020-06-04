@@ -59,7 +59,9 @@ else:
             'discord.py',
             'subprocess32',
             'pyinstaller',
-            'ctypes']
+            'ctypes',
+            'pypiwin32',
+            'pywin32']
 
     for lib in libs:
         os.system(f'pip3 install {lib}')
