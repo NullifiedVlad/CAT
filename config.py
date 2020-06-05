@@ -4,7 +4,7 @@ Jo to our telegram group https://t.me/catchatdev
 Made by NullifiedVlad 2020
 """
 
-token = 'NzE1NjgyOTU1NDQ3NzYzMDY0.XtlBiQ.g2QTi88TreVwZW1TIGDLRSOjX-8'  # Вставьте токен
+token = 'NzE1NjgyOTU1NDQ3NzYzMDY0.XtpQlQ.NEEjX87OBztAyzQirvikYpAFtoI'  # Вставьте токен
 channel = 687944069271519257  # вставь сюда свой айди канала
 
 

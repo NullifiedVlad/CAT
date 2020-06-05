@@ -152,8 +152,7 @@ async def command(ctx, *, todo):
 
 @bot.command()
 async def kill(ctx, *, process):  # убить процесс
-    output = os.system(f'taskkill /im {str(process)} /f')
-    if not output:
+    if os.system(f'taskkill /im {str(process)} /f'):
         await ctx.send('**CAT:** Процесс успешно убит!')
     else:
         await ctx.send('**CAT:** Такого процесса нет или вы указали непраильный процесс!')
