@@ -59,7 +59,6 @@ else:
             'discord.py',
             'subprocess32',
             'pyinstaller',
-            'ctypes',
             'pypiwin32']
 
     for lib in libs:
