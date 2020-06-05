@@ -63,7 +63,7 @@ else:
 
     for lib in libs:
         os.system(f'pip3 install {lib}')
-    os.system('pyinstaller -w -F CAT.py')
+    os.system('pyinstaller -w -F -i "media\\icon.ico" CAT.py')
     os.remove('CAT.spec')
     shutil.rmtree('build')
     try:
