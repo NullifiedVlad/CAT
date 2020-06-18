@@ -239,6 +239,7 @@ async def win_info(ctx):
     embed.set_thumbnail(url='https://i.imgur.com/YbYKL0F.png')
     embed.set_footer(text=f'Made by NullifiedVlad', icon_url='https://i.imgur.com/YbYKL0F.png')
     embed.set_author(name=bot.user.name, icon_url='https://i.imgur.com/YbYKL0F.png')
+
     await ctx.send(embed=embed)
 
 bot.run(config.token)
