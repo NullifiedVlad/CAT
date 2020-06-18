@@ -114,8 +114,8 @@ async def press(ctx, key, how_many):
         await ctx.send('ERROR')
 
 
-@bot.command()
-async def help(ctx):  # send help message
+@bot.command(aliases=['help'])
+async def help_message(ctx):  # send help message
     embed = discord.Embed(title='**Commands**', description='Configuration Administration Tool.', color=0x03fcec)
     # заголовки
     embed.add_field(name='**/help**', value='Show this message.', inline=False)
