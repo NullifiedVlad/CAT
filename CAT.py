@@ -14,6 +14,7 @@ import pyautogui as pg
 from discord.ext import commands
 import config
 import nullfunction as nf
+
 pg.FAILSAFE = False
 bot = commands.Bot(command_prefix='/')
 channel = bot.get_channel(config.channel)
