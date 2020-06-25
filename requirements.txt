@@ -1,6 +1,7 @@
 PyAutoGUI
 DateTime
 gTTS
+wheel
 playsound
 colorama
 requests

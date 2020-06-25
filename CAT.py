@@ -9,7 +9,6 @@ import os
 import sys
 from datetime import datetime
 import win32api
-import win32file
 import discord
 import pyautogui as pg
 from discord.ext import commands
