@@ -1,11 +1,8 @@
 PyAutoGUI
-DateTime
-gTTS
 wheel
 playsound
 colorama
 requests
 beautifulsoup4
 discord.py
-subprocess32
 pypiwin32

