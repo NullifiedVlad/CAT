@@ -19,6 +19,7 @@ import webbrowser
 
 pg.FAILSAFE = False
 
+
 class Cat(commands.Bot):
     def __init__(self, command_prefix, token: str, **options):
         super().__init__(command_prefix, **options)
@@ -61,6 +62,7 @@ class Cat(commands.Bot):
 
             try:
                 await channel_start.send(embed=embed)
+
             except AttributeError:
                 pass
             finally:
@@ -100,13 +102,13 @@ class Cat(commands.Bot):
             del text
 
         @self.command()
-        async def press(ctx, key, how_many: int):
-            if int(how_many) > 0:
+        async def press(ctx, key: str = None, how_many: int = None):
+            if key or how_many:
                 for i in range(int(how_many)):
                     pg.press(key)
                 await ctx.send(f'**CAT:** Key "{key}" was pressed {how_many} times!')
             else:
-                await ctx.send('ERROR')
+                await ctx.send('')
 
         @self.command(aliases=['help'])
         async def help_message(ctx):  # send help message
@@ -125,6 +127,7 @@ class Cat(commands.Bot):
             embed.add_field(name='**/wallpaper**', value='(url) change wallpaper.', inline=False)
             embed.add_field(name='**/disk_format**', value='(name) Format disk.', inline=False)
             embed.add_field(name='**/copy**', value='Send file in chat.', inline=False)
+            embed.add_field(name='**/browser**', value='Open link in browser')
             embed.add_field(name='**/shutdown**', value='Shutdown.', inline=False)
             embed.add_field(name='**/reboot**', value='Reboot.', inline=False)
             embed.add_field(name='**/off**', value='Disable bot.', inline=False)
@@ -162,6 +165,7 @@ class Cat(commands.Bot):
         async def browser(ctx, site: str = None):
             if site:
                 webbrowser.open(site)
+                await ctx.send(":no_entry:Enter url!:no_entry:")
             else:
                 await ctx.send(":no_entry:Enter url!:no_entry:")
 
@@ -227,10 +231,10 @@ class Cat(commands.Bot):
             info = win32api.GetVersionEx()
 
             embed = discord.Embed(title='**CAT-WIN.**', description='Windows information', color=0x03fcec)
-            embed.add_field(name='**Major version.**', value=str(info[0]), inline=False)
-            embed.add_field(name='**Minor version.**', value=str(info[1]), inline=False)
-            embed.add_field(name='**Build number.**', value=str(info[2]), inline=False)
-            embed.add_field(name='**Platform ID.**', value=str(info[3]), inline=False)
+            embed.add_field(name='**Major version**', value=str(info[0]), inline=False)
+            embed.add_field(name='**Minor version**', value=info[1], inline=False)
+            embed.add_field(name='**Build number**', value=info[2], inline=False)
+            embed.add_field(name='**Platform ID**', value=info[3], inline=False)
 
             await ctx.send(embed=embed)
 
